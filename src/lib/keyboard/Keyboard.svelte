@@ -1,20 +1,6 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
-	let currentKey = '';
+	export let currentKey = '';
 
-	const onKeyPress = ({ key }) => {
-		currentKey = key;
-	};
-	onMount(() => {
-		if (typeof window !== 'undefined') {
-			document.addEventListener('keypress', onKeyPress);
-		}
-	});
-	onDestroy(() => {
-		if (typeof window !== 'undefined') {
-			document.removeEventListener('keypress', onKeyPress);
-		}
-	});
 	const colemakDHm = [
 		[
 			// left side
@@ -43,25 +29,25 @@
 		// right side
 		[
 			[
-				{ key: 'j', finger: 'l1' },
-				{ key: 'l', finger: 'l1' },
-				{ key: 'u', finger: 'l2' },
-				{ key: 'y', finger: 'l3' },
-				{ key: ';', finger: 'l4' }
+				{ key: 'j', finger: 'r1' },
+				{ key: 'l', finger: 'r1' },
+				{ key: 'u', finger: 'r2' },
+				{ key: 'y', finger: 'r3' },
+				{ key: ';', finger: 'r4' }
 			],
 			[
-				{ key: 'm', finger: 'l1' },
-				{ key: 'n', finger: 'l1' },
-				{ key: 'e', finger: 'l2' },
-				{ key: 'i', finger: 'l3' },
-				{ key: 'o', finger: 'l4' }
+				{ key: 'm', finger: 'r1' },
+				{ key: 'n', finger: 'r1' },
+				{ key: 'e', finger: 'r2' },
+				{ key: 'i', finger: 'r3' },
+				{ key: 'o', finger: 'r4' }
 			],
 			[
-				{ key: 'k', finger: 'l1' },
-				{ key: 'h', finger: 'l1' },
-				{ key: ',', finger: 'l2' },
-				{ key: '.', finger: 'l3' },
-				{ key: '/', finger: 'l4' }
+				{ key: 'k', finger: 'r1' },
+				{ key: 'h', finger: 'r1' },
+				{ key: ',', finger: 'r2' },
+				{ key: '.', finger: 'r3' },
+				{ key: '/', finger: 'r4' }
 			]
 		]
 	];

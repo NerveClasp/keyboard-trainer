@@ -1,32 +1,61 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
-
-	let text = 'something to type';
-	let currentKey = '';
-
-	const onKeyPress = ({ key }) => {
-		currentKey = key;
-	};
-	onMount(() => {
-		if (typeof window !== 'undefined') {
-			document.addEventListener('keypress', onKeyPress);
-		}
-	});
-	onDestroy(() => {
-		if (typeof window !== 'undefined') {
-			document.removeEventListener('keypress', onKeyPress);
-		}
-	});
+	export let textArray = [{ key: ' ', status: 'default' }];
+	export let currentIndex = 0;
 </script>
 
-<div>
-	{#each text as char}
-		<span class={`char${char === currentKey ? ' active' : ''}`}>{char}</span>
+<div class="text-wrapper">
+	{#each textArray as { key, status }, i}
+		<span
+			class={`char${i === currentIndex ? ' active' : ''} ${status !== 'default' ? status : ''}${
+				key === ' ' ? ' space' : ''
+			}`}
+		>
+			{key}
+		</span>
 	{/each}
 </div>
 
 <style>
-	.active {
-		color: var(--accent-color);
+	.text-wrapper {
+		display: flex;
+	}
+	.char {
+		position: relative;
+	}
+	.active::before {
+		position: absolute;
+		left: -1px;
+		top: 0;
+		content: '';
+		width: 1px;
+		height: 100%;
+		background-color: var(--accent-color);
+		animation: cursor-blink 0.6s ease-in-out infinite;
+	}
+
+	@keyframes -global-cursor-blink {
+		0% {
+			opacity: 0;
+		}
+		50% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+
+	.success {
+		color: var(--key-success);
+	}
+	.mistake {
+		color: var(--key-mistake);
+	}
+	.erased {
+		color: var(--key-erased);
+	}
+	.space {
+		display: inline-block;
+		width: 1ch;
 	}
 </style>

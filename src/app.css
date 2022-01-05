@@ -16,6 +16,36 @@
 	--column-margin-top: 4rem;
   --bg: #1F1F1F;
 
+  /* Color Palette 1 */
+  /* CSS HEX */
+  --orange-yellow-crayola: #facf61;
+  --arylide-yellow: #e0c84f;
+  --brown-sugar: #a36239;
+  --ochre: #d47319;
+
+  /* CSS HSL */
+  --yellow-orange-color-wheel: hsla(36, 100%, 50%, 1);
+  --orange-yellow-crayola: hsla(43, 94%, 68%, 1);
+  --arylide-yellow: hsla(50, 70%, 59%, 1);
+  --brown-sugar: hsla(23, 48%, 43%, 1);
+  --ochre: hsla(29, 79%, 46%, 1);
+
+  /* Color Palette 2 */
+  /* CSS HEX */
+  --tart-orange: #f53838;
+  --firebrick: #a81e1e;
+  --citron: #a6b020;
+  --english-vermillion: #c94444;
+
+  /* CSS HSL */
+  --tart-orange: hsla(0, 90%, 59%, 1);
+  --firebrick: hsla(0, 70%, 39%, 1);
+  --citron: hsla(64, 69%, 41%, 1);
+  --english-vermillion: hsla(0, 55%, 53%, 1);
+
+  --key-mistake: #f53838;
+  --key-success: #a6b020;
+  --key-erased: #b9c6d2;
 }
 
 body {
@@ -102,3 +132,5 @@ button:focus:not(:focus-visible) {
 		font-size: 2.4rem;
 	}
 }
+
+
