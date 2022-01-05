@@ -1,5 +1,12 @@
-# Colemak DHm Keyboard Trainer (or maybe nerveclasp.art, we'll see)
+# Colemak DHm Keyboard Trainer 
 WIP
+
+## Twitch
+I'm planning to stream writing this on [Twitch](https://twitch.tv/beardy_coding) at around 7pm - 8pm [EET (GMT+2)](https://www.timeanddate.com/time/zone/ukraine/kyiv) which is 5pm GMT, 12pm EST, and 9am PST [(learn more)](https://www.timeanddate.com/worldclock/converter.html?iso=20220105T170000&p1=367&p2=136&p3=179&p4=137)
+
+## Inspired by
+- [https://www.colemak.academy/](https://www.colemak.academy/)
+- [https://monkeytype.com/](https://monkeytype.com/)
 
 ## create-svelte
 
