@@ -1,14 +1,19 @@
 <script lang="ts">
-	export let textArray = [{ key: ' ', status: 'default' }];
+	type Key = {
+		key: string;
+		status: string;
+		irrelevant?: boolean;
+	};
+	export let textArray: Key[] = [{ key: ' ', status: 'default' }];
 	export let currentIndex = 0;
 </script>
 
 <div class="text-wrapper">
-	{#each textArray as { key, status }, i}
+	{#each textArray as { key, status, irrelevant }, i}
 		<span
-			class={`char${i === currentIndex ? ' active' : ''} ${status !== 'default' ? status : ''}${
-				key === ' ' ? ' space' : ''
-			}`}
+			class={`char ${status !== 'default' ? status : ''}${key === ' ' ? ' space' : ''}`}
+			class:active={i === currentIndex}
+			class:irrelevant
 		>
 			{key}
 		</span>
@@ -53,6 +58,9 @@
 	}
 	.erased {
 		color: var(--key-erased);
+	}
+	.irrelevant {
+		opacity: 0.5;
 	}
 	.space {
 		display: inline-block;

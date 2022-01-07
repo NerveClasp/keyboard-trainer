@@ -8,7 +8,7 @@
 	const unsubscribe = currentIndex.subscribe((value) => {
 		currentIndexValue = value;
 	});
-	const text = 'mmm train me please lol';
+	const text = 'third stream is done';
 	type Key = {
 		key: string;
 		status: 'default' | 'success' | 'mistake' | 'erased';
@@ -19,6 +19,9 @@
 	let currentKey = text[currentIndexValue];
 	const expectedInputRegex = /^(?:[\w ]|Backspace)$/gi;
 	let changed = false;
+	const MAX_USER_ERROR_KEYS = 20;
+	let userErrors = 0;
+	let done = false;
 
 	const onKeyDown = ({ key }) => {
 		if (expectedInputRegex.test(key)) {
@@ -34,26 +37,54 @@
 	};
 
 	const updateCurrentKey = (index: number) => {
-		currentKey = text[index];
+		if (index >= 0 && index < textArray.length + 1) {
+			currentKey = text[index];
+		}
 	};
 
-	$: if (changed) {
+	const updateIndex = (index: number) => {
+		if (index >= 0 && index < textArray.length + 1) {
+			currentIndex.set(index);
+		}
+	};
+
+	$: if (changed && !done && currentIndexValue <= textArray.length) {
 		if (userKey === 'Backspace') {
-			console.log(textArray[currentIndexValue - 1]);
-			textArray[currentIndexValue - 1].status = 'erased';
-			currentIndex.set(currentIndexValue - 1);
+			const newIndex = currentIndexValue - 1;
+			textArray[newIndex].status = 'erased';
+			updateIndex(newIndex);
+			if (textArray[newIndex].irrelevant) {
+				textArray.splice(newIndex, 1);
+			} else {
+				updateCurrentKey(newIndex);
+			}
+
 			changed = false;
 		} else {
-			const expectedKey = textArray[currentIndexValue].key;
-			const success = expectedKey === userKey;
-			textArray[currentIndexValue].status = success ? 'success' : 'mistake';
+			const { key } = textArray?.[currentIndexValue] ?? {};
+			const success = key === userKey;
+			if (key) {
+				textArray[currentIndexValue].status = success ? 'success' : 'mistake';
+			}
 			let newIndex = currentIndexValue + 1;
 
 			if (success) {
 				updateCurrentKey(newIndex);
-				currentIndex.set(newIndex);
-			} else if (text[currentIndexValue] !== ' ') {
-				currentIndex.set(newIndex);
+				updateIndex(newIndex);
+				if (newIndex === textArray.length) {
+					done = true;
+				}
+			} else if ((key === ' ' || !key) && userErrors < MAX_USER_ERROR_KEYS) {
+				textArray.splice(currentIndexValue, 0, {
+					key: userKey,
+					status: 'mistake',
+					irrelevant: true
+				});
+				userErrors += 1;
+				updateIndex(newIndex);
+			} else if (userErrors < MAX_USER_ERROR_KEYS) {
+				updateIndex(newIndex);
+				updateCurrentKey(newIndex);
 			}
 
 			changed = false;
