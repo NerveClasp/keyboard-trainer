@@ -17,18 +17,24 @@
 	let textArray: Key[] = text.split('').map((key) => ({ key, status: 'default' }));
 	let userKey = '';
 	let currentKey = text[currentIndexValue];
-  const ignoreKeyCodes = [
-    'Shift', 'CapsLock', 'Alt', 'Control', 'Meta', 'Delete', 'GroupNext'
-  ].reduce((acc, key) => {
-    acc[key] = true;
-    return acc;
-  }, {});
+	const ignoreKeyCodes = [
+		'Shift',
+		'CapsLock',
+		'Alt',
+		'Control',
+		'Meta',
+		'Delete',
+		'GroupNext'
+	].reduce((acc: Record<string, boolean>, key: string) => {
+		acc[key] = true;
+		return acc;
+	}, {});
 	let changed = false;
 	const MAX_USER_ERROR_KEYS = 20;
 	let userErrors = 0;
 	let done = false;
-    
-  const shouldIgnoreKey = (key: string) => ignoreKeyCodes[key];
+
+	const shouldIgnoreKey = (key: string) => ignoreKeyCodes[key];
 
 	const onKeyDown = ({ key }) => {
 		if (!shouldIgnoreKey(key)) {
@@ -81,7 +87,7 @@
 				if (newIndex === textArray.length) {
 					done = true;
 				}
-        userErrors = 0;
+				userErrors = 0;
 			} else if ((key === ' ' || !key) && userErrors < MAX_USER_ERROR_KEYS) {
 				textArray.splice(currentIndexValue, 0, {
 					key: userKey,

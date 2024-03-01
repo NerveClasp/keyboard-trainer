@@ -101,7 +101,7 @@
 			]
 		]
 	];
-  const keyboard = qwerty;
+	const keyboard = qwerty;
 </script>
 
 <div class="keyboard">
@@ -110,7 +110,7 @@
 			{#each side as row}
 				<div class="row">
 					{#each row as { en, ua }}
-						<span class={`key${en === currentKey || ua === currentKey? ' active' : ''}`}>
+						<span class={`key${en === currentKey || ua === currentKey ? ' active' : ''}`}>
 							<span class="letter">{en}</span>
 						</span>
 					{/each}
