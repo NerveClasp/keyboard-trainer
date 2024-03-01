@@ -1,14 +1,14 @@
 <script lang="ts">
-	import Keyboard from '$lib/keyboard/Keyboard.svelte';
-	import Input from '$lib/input/Input.svelte';
-	import { currentIndex } from './_stores.js';
+	import Keyboard from '$lib/ui/keyboard/Keyboard.svelte';
+	import Input from '$lib/ui/input/Input.svelte';
+	import { currentIndex } from './stores.js';
 	import { onMount, onDestroy } from 'svelte';
 
 	let currentIndexValue = 0;
 	const unsubscribe = currentIndex.subscribe((value) => {
 		currentIndexValue = value;
 	});
-	const text = 'third stream is done';
+	const text = 'qqййй third stream is done';
 	type Key = {
 		key: string;
 		status: 'default' | 'success' | 'mistake' | 'erased';
@@ -17,21 +17,34 @@
 	let textArray: Key[] = text.split('').map((key) => ({ key, status: 'default' }));
 	let userKey = '';
 	let currentKey = text[currentIndexValue];
-	const expectedInputRegex = /^(?:[\w ]|Backspace)$/gi;
+	const ignoreKeyCodes = [
+		'Shift',
+		'CapsLock',
+		'Alt',
+		'Control',
+		'Meta',
+		'Delete',
+		'GroupNext'
+	].reduce((acc: Record<string, boolean>, key: string) => {
+		acc[key] = true;
+		return acc;
+	}, {});
 	let changed = false;
 	const MAX_USER_ERROR_KEYS = 20;
 	let userErrors = 0;
 	let done = false;
 
+	const shouldIgnoreKey = (key: string) => ignoreKeyCodes[key];
+
 	const onKeyDown = ({ key }) => {
-		if (expectedInputRegex.test(key)) {
+		if (!shouldIgnoreKey(key)) {
 			userKey = key;
 			changed = true;
 		}
 	};
 
 	const onKeyUp = ({ key }) => {
-		if (expectedInputRegex.test(key)) {
+		if (!shouldIgnoreKey(key)) {
 			userKey = '';
 		}
 	};
@@ -74,6 +87,7 @@
 				if (newIndex === textArray.length) {
 					done = true;
 				}
+				userErrors = 0;
 			} else if ((key === ' ' || !key) && userErrors < MAX_USER_ERROR_KEYS) {
 				textArray.splice(currentIndexValue, 0, {
 					key: userKey,

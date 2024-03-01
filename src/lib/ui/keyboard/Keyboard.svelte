@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let currentKey = '';
 
-	const colemakDHm = [
+	const _colemakDHm = [
 		[
 			// left side
 			[
@@ -51,16 +51,67 @@
 			]
 		]
 	];
+	const qwerty = [
+		[
+			// left side
+			[
+				{ en: 'q', ua: 'й', finger: 'l4' },
+				{ en: 'w', finger: 'l3' },
+				{ en: 'f', finger: 'l2' },
+				{ en: 'p', finger: 'l1' },
+				{ en: 'b', finger: 'l1' }
+			],
+			[
+				{ en: 'a', finger: 'l4' },
+				{ en: 'r', finger: 'l3' },
+				{ en: 's', finger: 'l2' },
+				{ en: 't', finger: 'l1' },
+				{ en: 'g', finger: 'l1' }
+			],
+			[
+				{ en: 'z', finger: 'l4' },
+				{ en: 'x', finger: 'l3' },
+				{ en: 'c', finger: 'l2' },
+				{ en: 'd', finger: 'l1' },
+				{ en: 'v', finger: 'l1' }
+			]
+		],
+		// right side
+		[
+			[
+				{ en: 'j', finger: 'r1' },
+				{ en: 'l', finger: 'r1' },
+				{ en: 'u', finger: 'r2' },
+				{ en: 'y', finger: 'r3' },
+				{ en: ';', finger: 'r4' }
+			],
+			[
+				{ en: 'm', finger: 'r1' },
+				{ en: 'n', finger: 'r1' },
+				{ en: 'e', finger: 'r2' },
+				{ en: 'i', finger: 'r3' },
+				{ en: 'o', finger: 'r4' }
+			],
+			[
+				{ en: 'k', finger: 'r1' },
+				{ en: 'h', finger: 'r1' },
+				{ en: ',', finger: 'r2' },
+				{ en: '.', finger: 'r3' },
+				{ en: '/', finger: 'r4' }
+			]
+		]
+	];
+	const keyboard = qwerty;
 </script>
 
 <div class="keyboard">
-	{#each colemakDHm as side}
+	{#each keyboard as side}
 		<div class="side">
 			{#each side as row}
 				<div class="row">
-					{#each row as { key }}
-						<span class={`key${key === currentKey ? ' active' : ''}`}>
-							<span class="letter">{key}</span>
+					{#each row as { en, ua }}
+						<span class={`key${en === currentKey || ua === currentKey ? ' active' : ''}`}>
+							<span class="letter">{en}</span>
 						</span>
 					{/each}
 				</div>
